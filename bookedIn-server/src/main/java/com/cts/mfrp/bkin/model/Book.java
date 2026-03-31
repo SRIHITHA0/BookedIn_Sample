@@ -33,7 +33,6 @@ public class Book {
     @Column(nullable = false)
     private LocalDateTime publishedAt;
 
-    private LocalDateTime memberSince;
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<Review> reviewList = new ArrayList<>();
 
