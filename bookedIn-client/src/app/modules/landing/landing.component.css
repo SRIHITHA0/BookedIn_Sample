@@ -1,142 +1,109 @@
-/* --- 1. CORE THEME & VARIABLES --- */
+/* --- 1. THEME VARIABLES --- */
 :root {
-  --obsidian: #0b0e14;
-  --dark-card: #161b22;
-  --crimson: #dc143c;
+  --bg-color: #0b0e14;
   --text-main: #ffffff;
   --text-muted: #8b949e;
+  --nav-bg: rgba(11, 14, 20, 0.85);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --crimson: #dc143c;
   --blue-accent: #58a6ff;
   --green-accent: #3fb950;
+  --card-bg: #161b22;
 }
 
+.light-theme {
+  --bg-color: #ffffff;
+  --text-main: #1a1a1a;
+  --text-muted: #666666;
+  --nav-bg: rgba(255, 255, 255, 0.9);
+  --border-color: rgba(0, 0, 0, 0.1);
+  --card-bg: #f0f0f0;
+}
+
+/* --- 2. GLOBAL RESET & BASE --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
 .landing-page {
-  background-color: var(--obsidian);
+  background-color: var(--bg-color);
   color: var(--text-main);
-  min-height: 100vh;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', -apple-system, sans-serif;
+  transition: background-color 0.4s ease;
   overflow-x: hidden;
 }
 
-/* --- 2. NAVIGATION (GLASSMORPHISM) --- */
+/* --- 3. NAVIGATION --- */
 .glass-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.2rem 10%;
+  padding: 1.2rem 8%;
   position: sticky;
   top: 0;
-  background: rgba(11, 14, 20, 0.85);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--nav-bg);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--border-color);
   z-index: 1000;
 }
 
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-}
-
-.nav-logo-img {
-  height: 38px;
-  width: auto;
-  object-fit: contain;
-}
-
-.logo-text {
-  font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-}
-
+.logo-container { display: flex; align-items: center; gap: 12px; }
+.nav-logo-img { height: 35px; width: auto; }
+.logo-text { font-size: 1.5rem; font-weight: 800; }
 .crimson-text { color: var(--crimson); }
+.blue-text { color: var(--blue-accent); }
+.green-text { color: var(--green-accent); }
 
-/* --- 3. HERO SECTION --- */
+/* --- 4. HERO SECTION --- */
 .hero {
-  padding: 140px 10%;
+  padding: 160px 8%;
   text-align: center;
-  background: radial-gradient(circle at center, #1e050a 0%, var(--obsidian) 80%);
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.headline {
-  font-size: 4.5rem;
-  font-weight: 900;
-  margin-bottom: 1.5rem;
-  letter-spacing: -2px;
-}
+.headline { font-size: 5rem; font-weight: 900; letter-spacing: -3px; margin-bottom: 1.5rem; line-height: 1; }
+.sub-headline { font-size: 1.4rem; color: var(--text-muted); margin-bottom: 3rem; }
 
-.sub-headline {
-  color: var(--text-muted);
-  font-size: 1.4rem;
-  margin-bottom: 3rem;
-  max-width: 700px;
-  margin-inline: auto;
-}
-
-/* --- 4. INFINITE BOOK CAROUSEL --- */
-.book-carousel-container {
-  padding: 60px 0;
-  background: #0d1117;
-  overflow: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.section-label {
-  text-align: center;
-  font-size: 0.8rem;
-  color: var(--crimson);
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  margin-bottom: 40px;
-}
-
-.carousel-track {
-  display: flex;
-  gap: 25px;
-  width: max-content;
-  animation: scroll 40s linear infinite;
-}
-
-.book-card {
-  width: 180px;
-  height: 270px;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #1a1a1a;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.book-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.book-card:hover { transform: scale(1.1) translateY(-10px); }
-
-@keyframes scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-/* --- 5. FEATURE LAYOUTS (FIGMA STYLE) --- */
-section.feature-row, section.feature-split {
-  padding: 120px 10%;
-  display: flex;
+/* --- 5. GRID ALIGNMENT (THE FIX) --- */
+section.feature-row {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr; /* Larger space for images */
   align-items: center;
-  justify-content: space-between;
-  gap: 100px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  gap: 80px;
+  padding: 100px 8%;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-.feature-row.reverse { flex-direction: row-reverse; }
+section.feature-row.reverse {
+  direction: rtl; /* Flips image/text position */
+}
 
-.feature-text-content, .info-side { flex: 1; max-width: 520px; }
-.feature-visual, .auth-side { flex: 1; display: flex; justify-content: center; }
+section.feature-row.reverse > * {
+  direction: ltr; /* Keeps text reading normally */
+}
 
+/* --- 6. IMAGE SCALING --- */
+.feature-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.figma-screenshot {
+  width: 100%; /* Forces the small image to fill its 1.2fr bucket */
+  height: auto;
+  max-width: 850px;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+  transform: perspective(1500px) rotateY(-8deg) rotateX(2deg);
+  transition: transform 0.6s ease;
+}
+
+.figma-screenshot:hover {
+  transform: perspective(1500px) rotateY(0deg) scale(1.02);
+}
+
+/* --- 7. TEXT & BADGES --- */
 .badge {
   display: inline-block;
   padding: 6px 14px;
@@ -144,106 +111,51 @@ section.feature-row, section.feature-split {
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  background: rgba(128, 128, 128, 0.15);
   margin-bottom: 20px;
-  background: rgba(255, 255, 255, 0.1);
 }
-
 .badge.crimson { color: var(--crimson); background: rgba(220, 20, 60, 0.1); }
 .badge.blue { color: var(--blue-accent); background: rgba(88, 166, 255, 0.1); }
 .badge.green { color: var(--green-accent); background: rgba(63, 185, 80, 0.1); }
 
-/* --- 6. UI MOCKUPS (3D TILT EFFECT) --- */
-.persona-card-mockup, .chat-mockup, .discovery-grid-mock, .login-card-mock {
-  background: var(--dark-card);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 24px;
-  padding: 35px;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 40px 80px rgba(0,0,0,0.7);
-  transform: perspective(1200px) rotateY(-8deg) rotateX(2deg);
-  transition: transform 0.6s ease;
+.section-title { font-size: 3.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+
+/* --- 8. BOOK CAROUSEL --- */
+.book-carousel-container {
+  padding: 60px 0;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  overflow: hidden;
 }
 
-.persona-card-mockup:hover, .chat-mockup:hover {
-  transform: perspective(1200px) rotateY(0deg) rotateX(0deg);
+.section-label { text-align: center; color: var(--crimson); font-size: 0.8rem; letter-spacing: 3px; margin-bottom: 40px; }
+
+.carousel-track {
+  display: flex;
+  gap: 30px;
+  width: max-content;
+  animation: scroll 40s linear infinite;
 }
 
-/* Chat Mockup Specifics */
-.chat-bubble {
-  padding: 12px 18px;
-  border-radius: 18px;
-  margin-bottom: 12px;
-  font-size: 0.9rem;
-  max-width: 85%;
-  line-height: 1.4;
+.book-card { width: 180px; height: 270px; border-radius: 12px; overflow: hidden; flex-shrink: 0; background: #333; }
+.book-card img { width: 100%; height: 100%; object-fit: cover; }
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
-.chat-bubble.left { background: #21262d; align-self: flex-start; }
-.chat-bubble.right { background: var(--crimson); color: white; margin-left: auto; }
 
-/* --- 7. BUTTONS --- */
-button { cursor: pointer; transition: all 0.3s ease; border: none; font-family: inherit; }
-
+/* --- 9. BUTTONS --- */
+button { cursor: pointer; border: none; font-family: inherit; transition: 0.3s ease; }
+.btn-theme { background: var(--card-bg); color: var(--text-main); padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border-color); margin-right: 10px; }
+.btn-ghost { background: transparent; color: var(--text-main); padding: 10px 20px; }
 .btn-crimson { background: var(--crimson); color: white; padding: 10px 24px; border-radius: 8px; font-weight: 600; }
-.btn-crimson-lg { background: var(--crimson); color: white; padding: 18px 40px; border-radius: 12px; font-size: 1.1rem; font-weight: 700; box-shadow: 0 10px 25px rgba(220, 20, 60, 0.3); }
-.btn-ghost { background: transparent; color: white; padding: 10px 24px; font-weight: 600; }
-.btn-ghost:hover { background: rgba(255, 255, 255, 0.05); border-radius: 8px; }
+.btn-crimson-lg { background: var(--crimson); color: white; padding: 18px 45px; border-radius: 12px; font-size: 1.1rem; font-weight: 700; }
 
-/* --- 8. FOOTER --- */
-.fable-footer {
-  padding: 100px 10% 50px;
-  background: #080a0e;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.footer-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.footer-nav {
-  display: flex;
-  gap: 35px;
-  margin-bottom: 20px;
-  justify-content: flex-end;
-}
-
-.footer-nav a {
-  color: var(--text-muted);
-  text-decoration: none;
-  font-size: 0.95rem;
-}
-
-.footer-nav a:hover { color: var(--crimson); }
-
-.copyright {
-  color: #484f58;
-  font-size: 0.85rem;
-  text-align: right;
-}
-/* --- FOOTER LOGO FIX --- */
-.footer-logo {
-  height: 40px;          /* This stops the "Huge Logo" issue */
-  width: auto;           /* Maintains proportions */
-  margin-bottom: 15px;   /* Space between logo and the text below it */
-  display: block;
-  object-fit: contain;
-  filter: brightness(1.1); /* Optional: makes it pop against the dark footer */
-}
-
-.footer-left p {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  margin-top: 5px;
-}
-
-/* Ensure the footer container handles the smaller logo gracefully */
-.footer-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start; /* Aligns logo and nav links to the top */
-  max-width: 1200px;
-  margin: 0 auto;
-}
+/* --- 10. FOOTER --- */
+.fable-footer { padding: 80px 8% 40px; border-top: 1px solid var(--border-color); }
+.footer-content { display: flex; justify-content: space-between; align-items: flex-start; }
+.footer-logo { height: 35px; margin-bottom: 10px; }
+.footer-nav { display: flex; gap: 30px; margin-bottom: 10px; }
+.footer-nav a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; }
+.copyright { color: var(--text-muted); font-size: 0.8rem; text-align: right; }
