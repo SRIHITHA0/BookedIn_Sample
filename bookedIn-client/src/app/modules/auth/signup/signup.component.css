@@ -1,0 +1,103 @@
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #0b0f19;
+  font-family: sans-serif;
+  color: #ffffff;
+  padding: 2rem;
+}
+
+.wide-card {
+  width: 100%;
+  max-width: 800px; /* Wider card to accommodate two columns */
+}
+
+.auth-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.signup-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+/* Make the button span across both columns */
+.btn-submit {
+  grid-column: 1 / -1;
+  background-color: #d9774a;
+  color: #ffffff;
+  padding: 0.85rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.2s;
+}
+
+.btn-submit:hover {
+  background-color: #c0653d;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #e2e8f0;
+}
+
+.form-group input,
+.form-group select {
+  background-color: #1e2532;
+  border: 1px solid #2d3748;
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #d9774a;
+}
+
+.auth-footer {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #8b95a5;
+  text-align: center;
+}
+
+.highlight-link {
+  color: #d9774a;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.highlight-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustment for smaller screens */
+@media (max-width: 600px) {
+  .signup-form {
+    grid-template-columns: 1fr;
+  }
+}
