@@ -1,5 +1,7 @@
 package com.cts.mfrp.bkin.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,7 +35,16 @@ public class Book {
     @Column(nullable = false)
     private LocalDateTime publishedAt;
 
+    @ManyToMany
+    @JoinTable(
+            name = "book_genre_mapping",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private List<Genre> genres = new ArrayList<>();
+
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("book")
     private List<Review> reviewList = new ArrayList<>();
 
 
