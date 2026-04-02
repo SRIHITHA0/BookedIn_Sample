@@ -1,5 +1,7 @@
 package com.cts.mfrp.bkin.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,13 +19,17 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonIgnoreProperties("reviewList")
     private User user;
+
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonIgnoreProperties("reviewList")
     private Book book;
-    private Float rating;
+    private double rating;
     private String content;
     @CreationTimestamp
     private LocalDateTime createdAt;
