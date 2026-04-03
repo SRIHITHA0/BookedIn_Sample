@@ -26,7 +26,8 @@ public class Book {
     private String author;
     @Column(nullable = false)
     private String coverUrl;
-    @Column(nullable = false)
+    @Lob
+    @Column(nullable = false,columnDefinition = "LONGTEXT")
     private String description;
     @Column(nullable = false)
     private Integer totalPages;
