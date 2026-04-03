@@ -1,0 +1,124 @@
+/* --- Root Setup --- */
+:host {
+  display: block;
+  background-color: #000000;
+  min-height: 100vh;
+}
+
+.book-detail-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: #ffffff;
+}
+
+/* --- Header Layout --- */
+.book-header {
+  display: flex;
+  gap: 50px;
+  margin-bottom: 60px;
+}
+
+.main-img {
+  width: 240px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+}
+
+.book-title { font-size: 3rem; font-weight: 800; margin: 0; line-height: 1.1; }
+.book-author { font-size: 1.3rem; color: #8b949e; margin: 10px 0 25px 0; }
+
+/* Metrics & Stars */
+.metrics-row, .row-rating { display: flex; align-items: center; gap: 10px; }
+.star-red { color: #d32f2f; font-size: 1.8rem; }
+.star-dim { color: #30363d; font-size: 1.8rem; }
+.rating-val { font-size: 1.3rem; font-weight: 800; }
+.count-val { color: #8b949e; font-size: 0.9rem; }
+
+/* Action Buttons */
+.actions { display: flex; gap: 15px; margin-bottom: 40px; }
+.btn-crimson { background: #d32f2f; color: #fff; border: none; padding: 12px 28px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+.btn-white { background: #fff; color: #000; border: none; padding: 12px 28px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+
+/* Synopsis */
+.synopsis-box .label { font-size: 0.8rem; color: #8b949e; letter-spacing: 2px; font-weight: bold; display: block; margin-bottom: 12px; }
+.description-text { line-height: 1.8; color: #c9d1d9; font-size: 1.05rem; margin: 0; white-space: pre-wrap; }
+
+/* --- Reviews --- */
+.review-card { background: #0d1117; border: 1px solid #21262d; border-radius: 12px; padding: 24px; margin-bottom: 16px; display: flex; gap: 20px; }
+.user-icon { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+.body-col { flex: 1; }
+.review-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+.name { font-weight: bold; font-size: 1.1rem; }
+.stars-mini .star-red, .stars-mini .star-dim { font-size: 1rem; }
+.mini-val { font-size: 0.85rem; font-weight: 700; }
+.btn-connect { background: #d32f2f; color: #fff; border: none; padding: 7px 15px; border-radius: 5px; font-size: 0.75rem; font-weight: bold; cursor: pointer; }
+.comment { color: #c9d1d9; line-height: 1.6; font-size: 0.95rem; margin: 0; }
+
+/* --- Status & Response --- */
+/* --- Enhanced 404 Error Layout --- */
+.status-screen {
+  min-height: 80vh; /* Increased from 60vh to take up more vertical space */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 20px; /* More vertical breathing room */
+}
+
+.error-view {
+  /* Adds a subtle dark gradient to make the crimson 404 pop */
+  background: radial-gradient(circle at center, #0d1117 0%, #000000 70%);
+}
+
+.error-code {
+  font-size: 8rem; /* Made slightly larger for impact */
+  font-weight: 900;
+  color: #d32f2f;
+  margin: 0;
+  line-height: 0.9;
+  letter-spacing: -5px;
+  text-shadow: 0 0 30px rgba(211, 47, 47, 0.2);
+}
+
+.error-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 30px 0 15px 0; /* More space between 404 and Title */
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.error-msg {
+  color: #8b949e;
+  font-size: 1.1rem;
+  max-width: 500px; /* Slightly wider for better text flow */
+  margin-bottom: 50px; /* Significant gap before the button */
+  line-height: 1.6;
+}
+
+/* Update the Return Button for the Error Page */
+.error-view .btn-crimson {
+  padding: 14px 40px; /* Slightly larger button for the error state */
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 20px rgba(211, 47, 47, 0.4);
+}
+
+/* Spinner adjustment for consistency */
+.spinner {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 30px; /* More space below the loader */
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .book-header { flex-direction: column; align-items: center; text-align: center; }
+  .review-card { flex-direction: column; }
+  .review-head { flex-direction: row; align-items: center; }
+  .actions { justify-content: center; }
+  .btn-crimson, .btn-white { width: 100%; }
+}
