@@ -1,0 +1,65 @@
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="header">
+    <img src="assets/logo.png" alt="BookedIn Logo" />
+    <span class="brand">
+      Booked<sub class="brand-sub">in</sub>
+    </span>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="content">
+    <h2>Complete Your Profile</h2>
+    <p class="subtitle">
+      Upload a profile photo and tell us a bit about yourself
+    </p>
+
+    <!-- PROFILE CARD -->
+    <div class="profile-card">
+
+      <!-- IMAGE UPLOAD -->
+      <div class="image-upload">
+        <div class="image-preview">
+          <img
+            *ngIf="imagePreview; else placeholder"
+            [src]="imagePreview"
+            alt="Profile Preview"
+          />
+
+          <ng-template #placeholder>
+            <span class="placeholder-icon">👤</span>
+          </ng-template>
+        </div>
+
+        <label class="upload-btn">
+          Upload Photo
+          <input
+            type="file"
+            accept="image/*"
+            (change)="onImageSelected($event)"
+            hidden
+          />
+        </label>
+      </div>
+
+      <!-- BIO -->
+      <div class="bio">
+        <textarea
+          placeholder="Tell us something about yourself..."
+          rows="4"
+          [(ngModel)]="bio"
+        ></textarea>
+      </div>
+
+    </div>
+
+    <!-- ACTION -->
+    <div class="actions">
+      <button class="complete-btn" (click)="completeProfile()">
+        Complete Profile
+      </button>
+    </div>
+  </main>
+
+</div>

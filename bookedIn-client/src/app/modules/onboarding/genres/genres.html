@@ -1,0 +1,41 @@
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="header">
+    <img src="assets/logo.png" alt="BookedIn Logo" />
+    <span class="brand">
+      Booked<sub class="brand-sub">in</sub>
+    </span>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="content">
+    <h2>Choose Your Genres</h2>
+    <p class="subtitle">Select any 3 genres that interest you</p>
+    <p class="count">{{ selectedGenres.length }} of 3 selected</p>
+
+    <!-- GENRE GRID -->
+    <div class="genre-grid">
+      <div
+        class="genre-card"
+        *ngFor="let genre of genres"
+        (click)="toggleGenre(genre.name)"
+        [class.selected]="selectedGenres.includes(genre.name)"
+      >
+        <img [src]="genre.image" alt="{{ genre.name }}" />
+        <span class="label">{{ genre.name }}</span>
+      </div>
+    </div>
+
+    <!-- ACTION -->
+    <div class="actions">
+      <button
+        class="next-btn"
+        [disabled]="!canGoNext()"
+        routerLink="/onboarding/profile">
+        Next
+      </button>
+    </div>
+  </main>
+
+</div>

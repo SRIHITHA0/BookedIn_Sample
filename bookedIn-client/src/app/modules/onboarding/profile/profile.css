@@ -1,0 +1,162 @@
+/* =========================
+   PAGE BACKGROUND
+   ========================= */
+.page {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #111827, #000);
+  color: #ffffff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* =========================
+   HEADER (LOGO + BRAND)
+   ========================= */
+.header {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 32px;
+  border-bottom: 1px solid #1f2933;
+}
+
+.header img {
+  height: 42px;
+}
+
+.brand {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.brand-sub {
+  color: #e11d48;
+  font-size: 12px;
+  font-weight: 700;
+  vertical-align: sub;
+}
+
+/* =========================
+   MAIN CONTENT
+   ========================= */
+.content {
+  max-width: 600px;
+  margin: 80px auto 0;
+  text-align: center;
+  padding: 0 20px;
+}
+
+h2 {
+  font-size: 32px;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  color: #9ca3af;
+  margin-bottom: 40px;
+}
+
+/* =========================
+   PROFILE CARD
+   ========================= */
+.profile-card {
+  background: linear-gradient(145deg, #0f172a, #020617);
+  border: 1px solid #1f2933;
+  border-radius: 20px;
+  padding: 40px 30px;
+}
+
+/* =========================
+   IMAGE UPLOAD
+   ========================= */
+.image-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.image-preview {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: #020617;
+  border: 2px dashed #374151;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder-icon {
+  font-size: 48px;
+  color: #4b5563;
+}
+
+.upload-btn {
+  background: #1f2933;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* =========================
+   BIO
+   ========================= */
+.bio textarea {
+  width: 100%;
+  background: #020617;
+  border: 1px solid #374151;
+  border-radius: 10px;
+  padding: 14px;
+  color: #ffffff;
+  resize: none;
+}
+
+.bio textarea::placeholder {
+  color: #9ca3af;
+}
+
+/* =========================
+   ACTION
+   ========================= */
+.actions {
+  margin-top: 36px;
+}
+
+.complete-btn {
+  background-color: #e11d48;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 40px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.complete-btn:hover {
+  background-color: #be123c;
+  transform: translateY(-2px);
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media (max-width: 600px) {
+  h2 {
+    font-size: 26px;
+  }
+
+  .profile-card {
+    padding: 30px 20px;
+  }
+}

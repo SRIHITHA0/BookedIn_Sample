@@ -1,0 +1,22 @@
+<div *ngIf="profile" class="profile">
+
+  <img
+    *ngIf="profile.profileImageUrl"
+    class="avatar"
+    [src]="profile.profileImageUrl"
+  />
+
+  <h2>{{ profile.displayName }}</h2>
+
+  <h3>About</h3>
+  <p>{{ profile.bio }}</p>
+
+  <h3>Favorite Genres</h3>
+  <div class="genres">
+    <span *ngFor="let genre of profile.favoriteGenres">
+      {{ genre }}
+    </span>
+  </div>
+
+</div>
+``

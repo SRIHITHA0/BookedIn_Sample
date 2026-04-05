@@ -7,6 +7,14 @@ import { SignupComponent } from './modules/auth/signup/signup.component';
 export const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent }
-  //{ path: 'profile', component: ProfileComponent }
+  { path: 'signup', component: SignupComponent },
+
+
+{
+path: 'onboarding',
+loadChildren: () =>
+      import('./modules/onboarding/onboarding-module')
+        .then(m => m.OnboardingModule)
+  }
+
 ];
