@@ -28,10 +28,12 @@
     </div>
 
     <!-- ACTION -->
+    <!-- ACTION -->
     <div class="actions">
       <button
         class="next-btn"
         [disabled]="!canGoNext()"
+        (click)="saveGenres()"
         routerLink="/onboarding/profile">
         Next
       </button>

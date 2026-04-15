@@ -10,7 +10,6 @@ templateUrl: './genres.html',
 styleUrls: ['./genres.css']
 })
 export class GenresComponent {
-
 genres = [
 { name: 'Fantasy', image: 'assets/genreImg/fantasy.png' },
 { name: 'Romance', image: 'assets/genreImg/romance.png' },
@@ -35,5 +34,11 @@ toggleGenre(name: string): void {
 
   canGoNext(): boolean {
     return this.selectedGenres.length === 3;
+  }
+
+  saveGenres(): void {
+    const profile = JSON.parse(localStorage.getItem('profile') || '{}');
+    profile.favoriteGenres = this.selectedGenres;
+    localStorage.setItem('profile', JSON.stringify(profile));
   }
 }

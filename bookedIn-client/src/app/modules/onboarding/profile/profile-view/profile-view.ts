@@ -1,21 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProfileService } from '../../../../services/profile';
-
+import { RouterModule } from '@angular/router';
 @Component({
-standalone: true,
 selector: 'app-profile-view',
-imports: [CommonModule],
 templateUrl: './profile-view.html',
-styleUrls: ['./profile-view.css']
+styleUrls: ['./profile-view.css'],
+standalone: true,
+imports: [CommonModule,RouterModule]
 })
-export class ProfileView {
+export class ProfileViewComponent implements OnInit {
+profileData: any = null;
+initials: string = '';
 
-profile: any;
+ngOnInit() {
+    const saved = localStorage.getItem('profile');
+    if (saved) {
+      this.profileData = JSON.parse(saved);
 
-constructor(private profileService: ProfileService) {
-    this.profileService.getProfile().subscribe((res: any) => {
-      this.profile = res;
-    });
+      if (this.profileData.name) {
+        this.initials = this.profileData.name
+          .split(' ')
+          .map((n: string) => n[0])
+          .join('')
+          .toUpperCase();
+      } else {
+        this.initials = 'AU';
+      }
+    }
   }
 }

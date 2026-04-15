@@ -1,22 +1,82 @@
-<div *ngIf="profile" class="profile">
+<div class="page">
 
-  <img
-    *ngIf="profile.profileImageUrl"
-    class="avatar"
-    [src]="profile.profileImageUrl"
-  />
+  <!-- HEADER with BookedIn logo + nav -->
+  <header class="header">
+    <div class="brand-block">
+      <img src="assets/logo.png" alt="BookedIn Logo" />
+      <span class="brand">
+        Booked<sub class="brand-sub">in</sub>
+      </span>
+    </div>
 
-  <h2>{{ profile.displayName }}</h2>
+    <nav class="navbar">
+      <a routerLink="/home"><i class="fas fa-home"></i> Home</a>
+      <a routerLink="/library"><i class="fas fa-book"></i> Library</a>
+      <a routerLink="/messages"><i class="fas fa-envelope"></i> Messages</a>
+      <a routerLink="/profile-view" class="active"><i class="fas fa-user"></i> Profile</a>
+    </nav>
 
-  <h3>About</h3>
-  <p>{{ profile.bio }}</p>
+  </header>
 
-  <h3>Favorite Genres</h3>
-  <div class="genres">
-    <span *ngFor="let genre of profile.favoriteGenres">
-      {{ genre }}
-    </span>
+  <!-- PROFILE CONTAINER -->
+  <div class="profile-container">
+
+    <!-- USER BOX -->
+    <div class="box">
+      <div class="profile-header">
+        <div *ngIf="!profileData?.profileImageUrl" class="avatar">{{ initials }}</div>
+        <img *ngIf="profileData?.profileImageUrl" [src]="profileData.profileImageUrl" class="avatar-img" alt="Profile Photo" />
+
+        <div class="profile-info">
+          <h2>{{ profileData?.name || 'Anonymous User' }}</h2>
+          <p class="member-since">Member since: {{ profileData?.memberSince || 'N/A' }}</p>
+        </div>
+
+        <button class="edit-btn" routerLink="/profile-edit">Edit Profile</button>
+
+      </div>
+
+      <!-- QUICK STATS -->
+      <div class="stats">
+        <div><strong>{{ profileData?.booksRead || 0 }}</strong><br/>Books Read</div>
+        <div><strong>{{ profileData?.reviews || 0 }}</strong><br/>Reviews</div>
+        <div><strong>{{ profileData?.connections || 0 }}</strong><br/>Connections</div>
+      </div>
+    </div>
+
+    <!-- ABOUT BOX -->
+    <div class="box">
+      <h3>About</h3>
+      <p>{{ profileData?.bio || 'No bio added yet.' }}</p>
+    </div>
+
+    <!-- FAVORITE GENRES BOX -->
+    <div class="box">
+      <h3>Favorite Genres</h3>
+      <div class="genres">
+        <span *ngFor="let genre of profileData?.favoriteGenres" class="genre-tag">{{ genre }}</span>
+      </div>
+    </div>
+
+    <!-- FAVORITE BOOKS BOX -->
+    <div class="box">
+      <h3>Favorite Books</h3>
+      <div class="books" *ngIf="profileData?.favoriteBooks?.length > 0; else noBooks">
+        <img *ngFor="let book of profileData?.favoriteBooks" [src]="book" alt="Book Cover" />
+      </div>
+      <ng-template #noBooks>
+        <p>No favorite books added yet.</p>
+      </ng-template>
+    </div>
+
+    <!-- READING GOAL BOX -->
+    <div class="box">
+      <h3>2026 Reading Goal</h3>
+      <div class="progress-bar">
+        <div class="progress" [style.width.%]="profileData?.goalProgress || 0"></div>
+      </div>
+      <p>{{ profileData?.goalText || 'No goal set yet.' }}</p>
+    </div>
+
   </div>
-
 </div>
-``

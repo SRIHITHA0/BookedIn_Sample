@@ -1,0 +1,41 @@
+<div class="page">
+  <div class="profile-container">
+    <div class="box">
+      <h2>Edit Profile</h2>
+
+      <form (ngSubmit)="saveProfile()" #profileForm="ngForm">
+
+        <!-- Name -->
+        <label>Name</label>
+        <input type="text" [(ngModel)]="profileData.name" name="name" required />
+
+        <!-- Bio -->
+        <label>Bio</label>
+        <textarea [(ngModel)]="profileData.bio" name="bio"></textarea>
+
+        <!-- Profile Image -->
+        <label>Profile Image</label>
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+
+        <!-- Show preview if image exists -->
+        <img *ngIf="profileData.profileImageUrl" [src]="profileData.profileImageUrl" class="avatar-preview" />
+
+
+        <!-- Favorite Genres -->
+        <label>Favorite Genres</label>
+        <input type="text" [(ngModel)]="newGenre" name="newGenre" placeholder="Add a genre" />
+        <button type="button" (click)="addGenre()">Add</button>
+
+        <div class="genres">
+          <span *ngFor="let genre of profileData.favoriteGenres" class="genre-tag">
+            {{ genre }}
+            <button type="button" (click)="removeGenre(genre)">x</button>
+          </span>
+        </div>
+
+        <!-- Save Button -->
+        <button type="submit" class="save-btn">Save Changes</button>
+      </form>
+    </div>
+  </div>
+</div>
