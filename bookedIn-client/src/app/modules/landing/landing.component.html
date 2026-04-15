@@ -5,15 +5,12 @@
       <span class="logo-text">Booked<span class="crimson-text">In</span></span>
     </div>
     <nav class="auth-controls">
-      <!-- Changed to routerLink="/login" -->
-      <button class="btn-ghost" routerLink="/login">Log In</button>
-      <!-- Changed to routerLink="/signup" -->
-      <button class="btn-crimson" routerLink="/signup">Sign Up</button>
       <button class="btn-theme" (click)="toggleTheme()">
         {{ isLightMode ? '🌙 Dark' : '☀️ Light' }}
       </button>
-      <button class="btn-ghost" (click)="onSignIn()">Log In</button>
-      <button class="btn-crimson" (click)="onSignIn()">Sign Up</button>
+
+      <button class="btn-ghost" routerLink="/login">Log In</button>
+      <button class="btn-crimson" routerLink="/signup">Sign Up</button>
     </nav>
   </header>
 
@@ -22,12 +19,10 @@
       <div class="hero-content">
         <h1 class="headline">Let's connect?</h1>
         <p class="sub-headline">Discover your next chapter with readers who share your passion.</p>
-        <!-- Changed to routerLink="/signup" -->
         <button class="btn-crimson-lg" routerLink="/signup">Get Started — It's Free</button>
       </div>
     </section>
-    
-    <!-- ... Rest of your existing landing page HTML ... -->
+
 
     <section class="book-carousel-container">
       <h2 class="section-label">Trending in the Community</h2>
