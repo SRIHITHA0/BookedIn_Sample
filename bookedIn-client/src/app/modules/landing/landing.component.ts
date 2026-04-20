@@ -10,6 +10,10 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./landing.component.css']
 })
 export class LandingComponent {
+  // Properties must be inside the class
+  isLightMode: boolean = false;
+
+  // Methods must be inside the class
   // All logic must be INSIDE these class braces
 
   isLightMode = false;
@@ -23,6 +27,7 @@ export class LandingComponent {
       event.preventDefault();
     }
     console.log("Navigation triggered");
+    // Usually, you would call an AuthService here for Auth0
   }
 
 } // This is the final closing brace
