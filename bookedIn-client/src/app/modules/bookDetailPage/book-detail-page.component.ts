@@ -1,13 +1,14 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { BookService } from '../../services/book.service';
 import { ReviewService } from '../../services/review.service';
 
 @Component({
   selector: 'app-book-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './book-detail-page.component.html',
   styleUrls: ['./book-detail-page.component.css']
 })
@@ -16,12 +17,19 @@ export class BookDetailPageComponent implements OnInit {
   private bookService = inject(BookService);
   private reviewService = inject(ReviewService);
 
-  // State Signals
+  // Core Data
   book = signal<any>(null);
   reviews = signal<any[]>([]);
   averageRating = signal<number>(0);
+  
+  // States
   isLoading = signal<boolean>(true);
   isError = signal<boolean>(false);
+  isReviewFormVisible = signal<boolean>(false);
+
+  // Form Data
+  newReviewContent = signal<string>('');
+  newReviewRating = signal<number>(5);
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -34,34 +42,51 @@ export class BookDetailPageComponent implements OnInit {
     this.isLoading.set(true);
     this.isError.set(false);
 
-    // Fetch Book Details
     this.bookService.getBookById(id).subscribe({
       next: (data) => {
         this.book.set(data);
         this.isLoading.set(false);
-        console.log('Book loaded:', data);
       },
-      error: (err) => {
-        console.error('API Error:', err);
+      error: () => {
         this.isError.set(true);
         this.isLoading.set(false);
       }
     });
 
-    // Fetch Reviews & Ratings
     this.reviewService.getReviewsByBook(id).subscribe(data => this.reviews.set(data));
     this.reviewService.getAverageRating(id).subscribe(val => this.averageRating.set(val));
   }
 
-  // Star Logic Helpers
+  toggleReviewForm() {
+    this.isReviewFormVisible.update(val => !val);
+  }
+
+  submitReview() {
+    if (!this.newReviewContent().trim()) return;
+
+    const reviewPayload = {
+      user: { id: 1 }, // Demo User
+      book: { id: this.book().id },
+      rating: this.newReviewRating(),
+      content: this.newReviewContent()
+    };
+
+    this.reviewService.addReview(reviewPayload).subscribe({
+      next: () => {
+        this.newReviewContent.set('');
+        this.newReviewRating.set(5);
+        this.isReviewFormVisible.set(false);
+        this.loadData(this.book().id); // Refresh List
+      },
+      error: (err) => console.error('Submission failed', err)
+    });
+  }
+
   getStarArray(rating: number): number[] {
-    const rounded = Math.round(rating || 0);
-    return Array(Math.min(5, rounded)).fill(0);
+    return Array(Math.round(rating || 0)).fill(0);
   }
 
   getEmptyStarArray(rating: number): number[] {
-    const rounded = Math.round(rating || 0);
-    const emptyCount = Math.max(0, 5 - rounded);
-    return Array(emptyCount).fill(0);
+    return Array(5 - Math.round(rating || 0)).fill(0);
   }
 }
