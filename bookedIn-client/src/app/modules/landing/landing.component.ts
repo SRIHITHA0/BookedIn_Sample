@@ -14,6 +14,14 @@ export class LandingComponent {
   isLightMode: boolean = false;
 
   // Methods must be inside the class
+  // All logic must be INSIDE these class braces
+
+  isLightMode = false;
+
+  toggleTheme() {
+    this.isLightMode = !this.isLightMode;
+  }
+
   onSignIn(event?: Event) {
     if (event) {
       event.preventDefault();
@@ -22,7 +30,4 @@ export class LandingComponent {
     // Usually, you would call an AuthService here for Auth0
   }
 
-  toggleTheme() {
-    this.isLightMode = !this.isLightMode;
-  }
-}
+} // This is the final closing brace
