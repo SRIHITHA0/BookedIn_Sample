@@ -2,11 +2,14 @@ import { Routes } from '@angular/router';
 import { LandingComponent } from './modules/landing/landing.component';
 import { LoginComponent } from './modules/auth/login/login.component';
 import { SignupComponent } from './modules/auth/signup/signup.component';
+import { LibraryComponent } from './modules/library/library.component';
 //import { ProfileComponent } from './modules/profile/profile.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent }
+  { path: 'signup', component: SignupComponent },
+  { path: '', redirectTo: 'library', pathMatch: 'full' },
+  { path: 'library', component: LibraryComponent },
   //{ path: 'profile', component: ProfileComponent }
 ];
