@@ -4,7 +4,6 @@
       <img src="assets/logo.png" alt="BookedIn Logo" class="nav-logo-img">
       <span class="logo-text">Booked<span class="crimson-text">In</span></span>
     </div>
-
     <nav class="auth-controls">
       <button class="btn-theme" (click)="toggleTheme()">
         {{ isLightMode ? '🌙 Dark' : '☀️ Light' }}
@@ -28,10 +27,14 @@
     <section class="book-carousel-container">
       <h2 class="section-label">Trending in the Community</h2>
       <div class="carousel-track">
-        <div class="book-card"><img src="assets/covers/book1.jpg" alt="Book 1"></div>
-        <div class="book-card"><img src="assets/covers/book2.jpg" alt="Book 2"></div>
-        <div class="book-card"><img src="assets/covers/book3.jpg" alt="Book 3"></div>
-        <div class="book-card"><img src="assets/covers/book4.jpg" alt="Book 4"></div>
+        <div class="book-card"><img src="covers/book1.jpg" alt="Book 1"></div>
+        <div class="book-card"><img src="covers/book2.jpg" alt="Book 2"></div>
+        <div class="book-card"><img src="covers/book3.jpg" alt="Book 3"></div>
+        <div class="book-card"><img src="covers/book4.jpg" alt="Book 4"></div>
+        <div class="book-card"><img src="covers/book5.jpg" alt="Book 5"></div>
+        <div class="book-card"><img src="covers/book6.jpg" alt="Book 6"></div>
+        <div class="book-card"><img src="covers/book1.jpg" alt="Book 1"></div>
+        <div class="book-card"><img src="covers/book2.jpg" alt="Book 2"></div>
       </div>
     </section>
 
@@ -39,17 +42,62 @@
       <div class="feature-text-content">
         <span class="badge">Seamless Entry</span>
         <h2 class="section-title">Your literary journey, <span class="crimson-text">synchronized.</span></h2>
-        <p>Jump right into your reading community with our streamlined authentication process.</p>
+        <p>Jump right into your reading community with our streamlined authentication process. No hassle, just books.</p>
       </div>
       <div class="feature-visual">
         <img src="assets/screenshots/auth-ui.png" alt="Auth Glimpse" class="figma-screenshot">
+      </div>
+    </section>
+
+    <section class="feature-row reverse">
+      <div class="feature-text-content">
+        <span class="badge crimson">Reader Persona</span>
+        <h2 class="section-title">Your Identity, <span class="crimson-text">Defined.</span></h2>
+        <p>Customization beyond the username. Showcase your unique literary DNA to the community.</p>
+      </div>
+      <div class="feature-visual">
+        <img src="assets/screenshots/persona-ui.png" alt="Persona Glimpse" class="figma-screenshot">
+      </div>
+    </section>
+
+    <section class="feature-row">
+      <div class="feature-text-content">
+        <span class="badge blue">Dynamic Discovery</span>
+        <h2 class="section-title">Beyond the <span class="blue-text">Algorithm.</span></h2>
+        <p>An AI-curated feed that understands your mood. Whether you want a technical dive or a weekend escape.</p>
+      </div>
+      <div class="feature-visual">
+        <img src="assets/screenshots/discovery-ui.png" alt="Discovery Glimpse" class="figma-screenshot">
+      </div>
+    </section>
+
+    <section class="feature-row reverse">
+      <div class="feature-text-content">
+        <span class="badge green">Direct Dialogue</span>
+        <h2 class="section-title">Connect <span class="green-text">Instantly.</span></h2>
+        <p>Secure P2P messaging built for book clubs and buddy reads. Discuss theories in real-time.</p>
+      </div>
+      <div class="feature-visual">
+        <img src="assets/screenshots/chat-ui.png" alt="Chat Glimpse" class="figma-screenshot">
       </div>
     </section>
   </main>
 
   <footer class="fable-footer">
     <div class="footer-content">
-      <p>&copy; 2026 BookedIn. Built for the curious.</p>
+      <div class="footer-left">
+        <div class="logo-container">
+          <img src="assets/logo.png" alt="B" class="footer-logo">
+          <span class="logo-text">Booked<span class="crimson-text">In</span></span>
+        </div>
+        <p>The digital sanctuary for readers.</p>
+      </div>
+      <div class="footer-right">
+        <div class="footer-nav">
+          <a href="#">Privacy</a> <a href="#">Terms</a> <a href="#">Contact</a>
+        </div>
+        <p class="copyright">&copy; 2026 BookedIn. Built for the curious.</p>
+      </div>
     </div>
   </footer>
 </div>

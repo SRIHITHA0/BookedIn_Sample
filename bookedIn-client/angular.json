@@ -3,7 +3,6 @@
   "version": 1,
   "cli": {
     "packageManager": "npm",
-    "analytics": false
     "analytics": "170d2545-8f86-4eb9-a0e3-517e24cdff12"
   },
   "newProjectRoot": "projects",
