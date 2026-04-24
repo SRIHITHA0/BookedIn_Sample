@@ -1,0 +1,94 @@
+<div class="min-h-screen bg-obsidian">
+
+  <!-- Navbar -->
+  <nav class="sticky top-0 z-50 bg-surface-100/80 backdrop-blur-md border-b border-surface-300 px-4 sm:px-6 py-3 sm:py-4">
+    <div class="max-w-5xl mx-auto flex items-center gap-4">
+      <button (click)="goBack()" class="text-gray-400 hover:text-crimson transition-colors flex-shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+      </button>
+      <h1 class="text-white font-semibold text-sm sm:text-base">My Reading Shelf</h1>
+      <a routerLink="/home" class="text-crimson text-xl font-extrabold tracking-tight ml-auto hover:opacity-80 transition-opacity">BookedIn</a>
+    </div>
+  </nav>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-5 sm:py-8">
+
+    <!-- Tab Bar -->
+    <div class="flex gap-1 bg-surface-200 rounded-xl p-1 mb-8">
+      <button *ngFor="let tab of ['WANT_TO_READ', 'READING', 'COMPLETED']"
+        (click)="setTab(tab)"
+        [ngClass]="activeTab === tab
+          ? 'flex-1 py-2.5 rounded-lg bg-crimson text-white text-sm font-medium transition-all'
+          : 'flex-1 py-2.5 rounded-lg text-gray-400 hover:text-white text-sm transition-all'">
+        {{ getTabLabel(tab) }}
+        <span class="ml-1.5 text-xs opacity-70">({{ tabCounts[tab] }})</span>
+      </button>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="flex justify-center py-20">
+      <svg class="animate-spin h-8 w-8 text-crimson" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 12 0 12 4.418z"></path>
+      </svg>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && filteredItems.length === 0" class="text-center py-20">
+      <p class="text-4xl mb-3">📚</p>
+      <p class="text-gray-500 text-lg">No books in "{{ getTabLabel(activeTab) }}" yet.</p>
+      <a routerLink="/home"
+        class="inline-block mt-4 bg-crimson hover:bg-crimson-hover text-white text-sm
+               font-medium rounded-lg px-6 py-2.5 transition-all">
+        Discover Books
+      </a>
+    </div>
+
+    <!-- Book List -->
+    <div *ngIf="!isLoading && filteredItems.length > 0" class="space-y-4">
+      <div *ngFor="let item of filteredItems" (click)="goToBook(item.book.id)"
+        class="bkin-card flex gap-4 p-4 cursor-pointer">
+
+        <!-- Cover -->
+        <div class="flex-shrink-0 w-16 rounded-lg overflow-hidden aspect-[2/3] bg-surface-200">
+          <img [src]="item.book.coverImageUrl" [alt]="item.book.title"
+            class="w-full h-full object-cover"
+            onerror="this.onerror=null;this.src='https://placehold.co/64x96/1A1A1A/DC143C?text=B'" />
+        </div>
+
+        <!-- Info -->
+        <div class="flex-1 min-w-0">
+          <h3 class="text-white font-semibold text-sm line-clamp-1">{{ item.book.title }}</h3>
+          <p class="text-gray-500 text-xs mt-0.5">{{ item.book.author }}</p>
+          <span class="inline-block mt-2 text-[10px] text-crimson bg-crimson/10 border border-crimson/20 rounded px-2 py-0.5">
+            {{ item.book.genre?.name }}
+          </span>
+
+          <!-- Stars (for completed) -->
+          <div *ngIf="activeTab === 'COMPLETED' && item.rating" class="flex items-center gap-1 mt-2">
+            <svg *ngFor="let s of getStars(item.rating)"
+              [ngClass]="s <= item.rating! ? 'text-crimson' : 'text-surface-400'"
+              xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <span class="text-gray-500 text-xs ml-1">{{ item.rating }}/5</span>
+          </div>
+
+          <p *ngIf="activeTab === 'COMPLETED' && item.review"
+            class="text-gray-500 text-xs mt-1.5 line-clamp-2 italic">
+            "{{ item.review }}"
+          </p>
+        </div>
+
+        <!-- Arrow -->
+        <div class="flex-shrink-0 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
