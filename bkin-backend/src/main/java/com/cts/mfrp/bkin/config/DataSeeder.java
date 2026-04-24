@@ -18,16 +18,16 @@ import java.util.stream.Collectors;
 public class DataSeeder {
 
     private static final Map<String, String> COVER_URLS = Map.of(
-        "The Name of the Wind",                   "https://covers.openlibrary.org/b/isbn/9780756404741-L.jpg?default=false",
-        "Project Hail Mary",                       "https://covers.openlibrary.org/b/isbn/9780593135204-L.jpg?default=false",
-        "Gone Girl",                               "https://covers.openlibrary.org/b/isbn/9780307588371-L.jpg?default=false",
-        "The Great Gatsby",                        "https://covers.openlibrary.org/b/isbn/9780743273565-L.jpg?default=false",
-        "Educated",                                "https://covers.openlibrary.org/b/isbn/9780399590504-L.jpg?default=false",
-        "The Hitchhiker's Guide to the Galaxy",    "https://covers.openlibrary.org/b/isbn/9780345391803-L.jpg?default=false",
-        "In the Woods",                            "https://covers.openlibrary.org/b/isbn/9780143113492-L.jpg?default=false",
-        "Atomic Habits",                           "https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg?default=false",
-        "The Midnight Library",                    "https://covers.openlibrary.org/b/isbn/9780525559474-L.jpg?default=false",
-        "Sapiens",                                 "https://covers.openlibrary.org/b/isbn/9780062316097-L.jpg?default=false"
+        "The Name of the Wind",                   "https://tse2.mm.bing.net/th/id/OIP.l7OmNx1kwCVmcD3DtCjZcQHaMP?rs=1&pid=ImgDetMain&o=7&rm=3",
+        "Project Hail Mary",                       "https://images.squarespace-cdn.com/content/v1/60332279321c6f6cc87cf8fe/c459467d-c710-4c8b-a34e-d9d98f275738/Project+Hail+Mary.jpg",
+        "Gone Girl",                               "https://www.commonsensemedia.org/sites/default/files/styles/ratio_2_3_xlarge/public/product-images/csm-movie/gone-girl.jpg",
+        "The Great Gatsby",                        "https://tse3.mm.bing.net/th/id/OIP._OuBE7YbstiymN2Hwb0K1AHaLS?w=1000&h=1524&rs=1&pid=ImgDetMain&o=7&rm=3",
+        "Educated",                                "https://cdn2.penguin.com.au/covers/original/9780099511021.jpg",
+        "The Hitchhiker's Guide to the Galaxy",    "https://tse1.mm.bing.net/th/id/OIP.4fBHiA9pN46_bpQ4SKwikQHaLH?rs=1&pid=ImgDetMain&o=7&rm=3",
+        "In the Woods",                            "https://m.media-amazon.com/images/I/91jMHH2+qHL._SL1500_.jpg",
+        "Atomic Habits",                           "https://tse4.mm.bing.net/th/id/OIP.brD-4-_kgf7hupfcL9bmhAAAAA?w=300&h=450&rs=1&pid=ImgDetMain&o=7&rm=3",
+        "The Midnight Library",                    "https://m.media-amazon.com/images/I/71ls-I6A5KL.jpg",
+        "Sapiens",                                 "https://d30a6s96kk7rhm.cloudfront.net/original/readings/978/009/959/9780099590088.jpg"
     );
 
     @Bean
