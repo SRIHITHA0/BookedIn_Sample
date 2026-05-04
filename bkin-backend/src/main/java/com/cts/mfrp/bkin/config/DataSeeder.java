@@ -105,7 +105,7 @@ public class DataSeeder {
                 System.out.println("[BookedIn] Database seeded: 10 genres, 10 books.");
             }
 
-            // Always run: update cover URLs to ISBN-based format for all existing books
+            // Always run: update cover URLs for existing books
             bookRepository.findAll().forEach(book -> {
                 String correctUrl = COVER_URLS.get(book.getTitle());
                 if (correctUrl != null && !correctUrl.equals(book.getCoverImageUrl())) {
@@ -114,6 +114,143 @@ public class DataSeeder {
                     System.out.println("[BookedIn] Updated cover for: " + book.getTitle());
                 }
             });
+
+            // Always run: seed additional 20 books if not already present
+            java.util.Set<String> existingTitles = bookRepository.findAll().stream()
+                .map(Book::getTitle)
+                .collect(java.util.stream.Collectors.toSet());
+
+            Map<String, Genre> allGenres = genreRepository.findAll().stream()
+                .collect(Collectors.toMap(Genre::getName, Function.identity()));
+
+            java.util.List<Book> extraBooks = new java.util.ArrayList<>();
+
+            java.util.Map<String, String> extra = new java.util.LinkedHashMap<>();
+            extra.put("The Alchemist",                        "https://covers.openlibrary.org/b/id/7414780-L.jpg");
+            extra.put("To Kill a Mockingbird",                "https://covers.openlibrary.org/b/id/12784310-L.jpg");
+            extra.put("1984",                                  "https://covers.openlibrary.org/b/id/9267242-L.jpg");
+            extra.put("Harry Potter and the Sorcerer's Stone", "https://covers.openlibrary.org/b/id/276518-L.jpg");
+            extra.put("The Da Vinci Code",                    "https://covers.openlibrary.org/b/id/9255229-L.jpg");
+            extra.put("Dune",                                  "https://covers.openlibrary.org/b/id/11481354-L.jpg");
+            extra.put("The Hunger Games",                     "https://covers.openlibrary.org/b/id/12646537-L.jpg");
+            extra.put("The Girl with the Dragon Tattoo",      "https://covers.openlibrary.org/b/id/9274740-L.jpg");
+            extra.put("The Kite Runner",                      "https://covers.openlibrary.org/b/id/14846827-L.jpg");
+            extra.put("Norwegian Wood",                       "https://covers.openlibrary.org/b/id/2237620-L.jpg");
+            extra.put("Brave New World",                      "https://covers.openlibrary.org/b/id/8231823-L.jpg");
+            extra.put("The Road",                             "https://covers.openlibrary.org/b/id/198120-L.jpg");
+            extra.put("Life of Pi",                           "https://covers.openlibrary.org/b/id/12840573-L.jpg");
+            extra.put("The Fault in Our Stars",               "https://covers.openlibrary.org/b/id/7418786-L.jpg");
+            extra.put("Becoming",                             "https://covers.openlibrary.org/b/isbn/9781524763138-L.jpg");
+            extra.put("Think and Grow Rich",                  "https://covers.openlibrary.org/b/id/14542536-L.jpg");
+            extra.put("The Power of Now",                     "https://covers.openlibrary.org/b/id/551262-L.jpg");
+            extra.put("Rich Dad Poor Dad",                    "https://covers.openlibrary.org/b/id/8315603-L.jpg");
+            extra.put("The Body Keeps the Score",             "https://covers.openlibrary.org/b/id/8315367-L.jpg");
+            extra.put("The Seven Husbands of Evelyn Hugo",    "https://covers.openlibrary.org/b/id/8354226-L.jpg");
+
+            if (!existingTitles.contains("The Alchemist"))
+                extraBooks.add(new Book("The Alchemist", "Paulo Coelho", "9780062315007",
+                    "A shepherd boy travels from Spain to Egypt in search of a worldly treasure.",
+                    extra.get("The Alchemist"), LocalDate.of(1988, 1, 1), allGenres.get("Fiction")));
+
+            if (!existingTitles.contains("To Kill a Mockingbird"))
+                extraBooks.add(new Book("To Kill a Mockingbird", "Harper Lee", "9780061935466",
+                    "A young girl witnesses racial injustice in the American South through her father's eyes.",
+                    extra.get("To Kill a Mockingbird"), LocalDate.of(1960, 7, 11), allGenres.get("Fiction")));
+
+            if (!existingTitles.contains("1984"))
+                extraBooks.add(new Book("1984", "George Orwell", "9780451524935",
+                    "A totalitarian society surveils and controls every aspect of life in a dystopian future.",
+                    extra.get("1984"), LocalDate.of(1949, 6, 8), allGenres.get("Science Fiction")));
+
+            if (!existingTitles.contains("Harry Potter and the Sorcerer's Stone"))
+                extraBooks.add(new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "9780590353427",
+                    "A young boy discovers he is a wizard and begins his education at Hogwarts School.",
+                    extra.get("Harry Potter and the Sorcerer's Stone"), LocalDate.of(1997, 6, 26), allGenres.get("Fantasy")));
+
+            if (!existingTitles.contains("The Da Vinci Code"))
+                extraBooks.add(new Book("The Da Vinci Code", "Dan Brown", "9780307474278",
+                    "A symbologist unravels a centuries-old mystery hidden within famous works of art.",
+                    extra.get("The Da Vinci Code"), LocalDate.of(2003, 3, 18), allGenres.get("Thriller")));
+
+            if (!existingTitles.contains("Dune"))
+                extraBooks.add(new Book("Dune", "Frank Herbert", "9780441013593",
+                    "A young nobleman navigates politics, religion, and ecology on a desert planet.",
+                    extra.get("Dune"), LocalDate.of(1965, 8, 1), allGenres.get("Science Fiction")));
+
+            if (!existingTitles.contains("The Hunger Games"))
+                extraBooks.add(new Book("The Hunger Games", "Suzanne Collins", "9780439023481",
+                    "In a dystopian future, a teenager fights for survival in a televised death tournament.",
+                    extra.get("The Hunger Games"), LocalDate.of(2008, 9, 14), allGenres.get("Science Fiction")));
+
+            if (!existingTitles.contains("The Girl with the Dragon Tattoo"))
+                extraBooks.add(new Book("The Girl with the Dragon Tattoo", "Stieg Larsson", "9780307949486",
+                    "A journalist and a hacker investigate a decades-old disappearance in a wealthy family.",
+                    extra.get("The Girl with the Dragon Tattoo"), LocalDate.of(2005, 8, 1), allGenres.get("Mystery")));
+
+            if (!existingTitles.contains("The Kite Runner"))
+                extraBooks.add(new Book("The Kite Runner", "Khaled Hosseini", "9781594631931",
+                    "A man confronts his past and seeks redemption against the backdrop of Afghanistan's history.",
+                    extra.get("The Kite Runner"), LocalDate.of(2003, 5, 29), allGenres.get("Fiction")));
+
+            if (!existingTitles.contains("Norwegian Wood"))
+                extraBooks.add(new Book("Norwegian Wood", "Haruki Murakami", "9780375704024",
+                    "A nostalgic story of loss, sexuality, and coming of age in 1960s Tokyo.",
+                    extra.get("Norwegian Wood"), LocalDate.of(1987, 9, 4), allGenres.get("Fiction")));
+
+            if (!existingTitles.contains("Brave New World"))
+                extraBooks.add(new Book("Brave New World", "Aldous Huxley", "9780060850524",
+                    "A utopian society engineered for happiness confronts the cost of its own perfection.",
+                    extra.get("Brave New World"), LocalDate.of(1932, 1, 1), allGenres.get("Science Fiction")));
+
+            if (!existingTitles.contains("The Road"))
+                extraBooks.add(new Book("The Road", "Cormac McCarthy", "9780307387899",
+                    "A father and son traverse a bleak post-apocalyptic landscape, clinging to survival.",
+                    extra.get("The Road"), LocalDate.of(2006, 9, 26), allGenres.get("Fiction")));
+
+            if (!existingTitles.contains("Life of Pi"))
+                extraBooks.add(new Book("Life of Pi", "Yann Martel", "9780156027328",
+                    "A boy survives a shipwreck and spends 227 days on a lifeboat with a Bengal tiger.",
+                    extra.get("Life of Pi"), LocalDate.of(2001, 9, 11), allGenres.get("Fiction")));
+
+            if (!existingTitles.contains("The Fault in Our Stars"))
+                extraBooks.add(new Book("The Fault in Our Stars", "John Green", "9780525478812",
+                    "Two teenagers with cancer fall in love and face the beauty and tragedy of life together.",
+                    extra.get("The Fault in Our Stars"), LocalDate.of(2012, 1, 10), allGenres.get("Romance")));
+
+            if (!existingTitles.contains("Becoming"))
+                extraBooks.add(new Book("Becoming", "Michelle Obama", "9781524763138",
+                    "The former First Lady of the United States reflects on her roots, journey, and identity.",
+                    extra.get("Becoming"), LocalDate.of(2018, 11, 13), allGenres.get("Biography")));
+
+            if (!existingTitles.contains("Think and Grow Rich"))
+                extraBooks.add(new Book("Think and Grow Rich", "Napoleon Hill", "9781585424337",
+                    "A timeless guide to achieving success through mindset, persistence, and clear goals.",
+                    extra.get("Think and Grow Rich"), LocalDate.of(1937, 3, 1), allGenres.get("Self-Help")));
+
+            if (!existingTitles.contains("The Power of Now"))
+                extraBooks.add(new Book("The Power of Now", "Eckhart Tolle", "9781577314806",
+                    "A spiritual guide to achieving enlightenment by living fully in the present moment.",
+                    extra.get("The Power of Now"), LocalDate.of(1997, 1, 1), allGenres.get("Self-Help")));
+
+            if (!existingTitles.contains("Rich Dad Poor Dad"))
+                extraBooks.add(new Book("Rich Dad Poor Dad", "Robert Kiyosaki", "9781612680194",
+                    "Contrasting financial philosophies reveal the mindset needed to build lasting wealth.",
+                    extra.get("Rich Dad Poor Dad"), LocalDate.of(1997, 4, 1), allGenres.get("Self-Help")));
+
+            if (!existingTitles.contains("The Body Keeps the Score"))
+                extraBooks.add(new Book("The Body Keeps the Score", "Bessel van der Kolk", "9780143127741",
+                    "An exploration of how trauma reshapes the brain and body, and pathways to recovery.",
+                    extra.get("The Body Keeps the Score"), LocalDate.of(2014, 9, 25), allGenres.get("Non-Fiction")));
+
+            if (!existingTitles.contains("The Seven Husbands of Evelyn Hugo"))
+                extraBooks.add(new Book("The Seven Husbands of Evelyn Hugo", "Taylor Jenkins Reid", "9781501161933",
+                    "A reclusive Hollywood icon finally reveals the secrets of her scandalous life.",
+                    extra.get("The Seven Husbands of Evelyn Hugo"), LocalDate.of(2017, 6, 13), allGenres.get("Fiction")));
+
+            if (!extraBooks.isEmpty()) {
+                bookRepository.saveAll(extraBooks);
+                System.out.println("[BookedIn] Added " + extraBooks.size() + " new books.");
+            }
         };
     }
 }
