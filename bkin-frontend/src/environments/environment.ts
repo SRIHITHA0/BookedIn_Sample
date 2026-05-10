@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
-  apiUrl: 'https://bookedin-sample.onrender.com'
+  production: false,
+  apiUrl: 'http://localhost:8080' // Or 9090, whatever your IntelliJ uses
 };
