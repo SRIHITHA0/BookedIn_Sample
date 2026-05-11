@@ -14,6 +14,6 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
     Optional<Message> findTopByRoomIdOrderBySentAtDesc(String roomId);
 
-    @Query("SELECT DISTINCT m.roomId FROM Message m WHERE m.roomId LIKE 'dm\\_%' ESCAPE '\\'")
+    @Query("SELECT DISTINCT m.roomId FROM Message m WHERE m.roomId LIKE 'dm_%'")
     List<String> findAllDmRoomIds();
 }

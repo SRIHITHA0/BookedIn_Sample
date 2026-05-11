@@ -191,12 +191,24 @@
 
     <!-- Input Area -->
     <div class="bg-surface-100 border-t border-surface-300 px-3 sm:px-6 py-3 sm:py-4 flex-shrink-0">
+      <!-- Connecting indicator -->
+      <div *ngIf="!chatService.connected" class="flex items-center gap-2 mb-2 text-xs text-gray-500">
+        <svg class="animate-spin h-3 w-3 text-crimson" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 12 0 12 4.418z"></path>
+        </svg>
+        Connecting to chat...
+      </div>
       <div class="flex items-end gap-2 sm:gap-3 max-w-4xl mx-auto">
         <textarea [(ngModel)]="newMessage" (keydown)="onKeydown($event)"
-          [placeholder]="isDmRoom ? 'Message ' + roomDisplayName + '...' : 'Message... (Enter to send)'"
+          [placeholder]="chatService.connected
+            ? (isDmRoom ? 'Message ' + roomDisplayName + '...' : 'Message... (Enter to send)')
+            : 'Connecting...'"
+          [disabled]="!chatService.connected"
           rows="1"
-          class="flex-1 bkin-input resize-none min-h-[40px] sm:min-h-[44px] max-h-32 leading-relaxed text-sm"></textarea>
-        <button (click)="sendMessage()" [disabled]="!newMessage.trim()"
+          class="flex-1 bkin-input resize-none min-h-[40px] sm:min-h-[44px] max-h-32 leading-relaxed text-sm
+                 disabled:opacity-50 disabled:cursor-not-allowed"></textarea>
+        <button (click)="sendMessage()" [disabled]="!newMessage.trim() || !chatService.connected"
           class="bg-crimson hover:bg-crimson-hover disabled:opacity-40 disabled:cursor-not-allowed
                  text-white rounded-xl p-2.5 sm:p-3 transition-all flex-shrink-0">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -48,7 +48,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private chatService: ChatService,
+    public chatService: ChatService,
     private authService: AuthService,
     private userService: UserService
   ) {}
@@ -87,11 +87,13 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       error: () => { this.isLoadingHistory = false; }
     });
 
+    // All messages (including own) are added only after server confirms them via STOMP broadcast.
+    // This ensures messages are only shown if they were successfully persisted.
     this.msgSub = this.chatService.connect(this.roomId).subscribe(msg => {
-      if (msg.senderUsername !== this.currentUsername) {
-        this.messages.push(msg);
-        this.shouldScroll = true;
-      }
+      this.messages.push(msg);
+      this.shouldScroll = true;
+      // Keep sidebar in sync when a new DM arrives
+      if (this.isDmRoom) this.loadPersonalConversations();
     });
   }
 
@@ -139,18 +141,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   sendMessage(): void {
     if (!this.newMessage.trim()) return;
     const content = this.newMessage.trim();
-    this.newMessage = '';
 
-    this.messages.push({
-      content,
-      type: 'TEXT',
-      senderUsername:    this.currentUsername,
-      senderDisplayName: this.currentDisplayName,
-      sentAt: new Date().toISOString()
-    });
-    this.shouldScroll = true;
-
-    this.chatService.sendMessage(this.roomId, content);
+    const sent = this.chatService.sendMessage(this.roomId, content);
+    if (sent) {
+      // Clear input only after successful dispatch; message will appear via STOMP echo
+      this.newMessage = '';
+    }
   }
 
   onKeydown(event: KeyboardEvent): void {

@@ -21,6 +21,9 @@ export class ChatService {
 
   private stompClient: Client | null = null;
   private messageSubject = new Subject<ChatMessage>();
+  private _connected = false;
+
+  get connected(): boolean { return this._connected; }
 
   constructor(private http: HttpClient) {}
 
@@ -44,6 +47,7 @@ export class ChatService {
       connectHeaders: { Authorization: `Bearer ${token}` },
       reconnectDelay: 5000,
       onConnect: () => {
+        this._connected = true;
         this.stompClient!.subscribe(`/topic/chat/${roomId}`, (msg: IMessage) => {
           try {
             const raw = JSON.parse(msg.body);
@@ -59,7 +63,9 @@ export class ChatService {
           } catch { /* ignore malformed frames */ }
         });
       },
+      onDisconnect: () => { this._connected = false; },
       onStompError: (frame) => {
+        this._connected = false;
         console.error('[STOMP] Error:', frame.headers['message']);
       }
     });
@@ -68,12 +74,13 @@ export class ChatService {
     return this.messageSubject.asObservable();
   }
 
-  sendMessage(roomId: string, content: string, type: string = 'TEXT'): void {
-    if (!this.stompClient?.active) return;
+  sendMessage(roomId: string, content: string, type: string = 'TEXT'): boolean {
+    if (!this._connected || !this.stompClient?.active) return false;
     this.stompClient.publish({
       destination: `/app/chat/${roomId}`,
       body: JSON.stringify({ content, type })
     });
+    return true;
   }
 
   getHistory(roomId: string): Observable<ChatMessage[]> {
@@ -93,6 +100,7 @@ export class ChatService {
   }
 
   disconnect(): void {
+    this._connected = false;
     this.stompClient?.deactivate();
     this.stompClient = null;
   }
