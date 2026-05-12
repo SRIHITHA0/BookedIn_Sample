@@ -72,24 +72,31 @@ public class ChatController {
 
         messagingTemplate.convertAndSend("/topic/chat/" + roomId, incoming);
 
-        // --- Start AI Integration ---
+        // --- AI Bot Integration ---
         if ("ai-bot-room".equals(roomId)) {
-            // 1. Fetch the books from DB to give the AI real context
             List<Book> libraryBooks = bookRepository.findAll();
-
-            // 2. Call the updated AiChatService with the message and the books
             String botResponse = aiChatService.getBotResponse(incoming.getContent(), libraryBooks);
+
+            // Persist the bot response using the seeded BookBot user
+            userRepository.findByUsername("BookBot").ifPresent(botUser -> {
+                Message botMessage = new Message();
+                botMessage.setRoomId(roomId);
+                botMessage.setSender(botUser);
+                botMessage.setContent(botResponse);
+                botMessage.setMessageType(Message.MessageType.TEXT);
+                messageRepository.save(botMessage);
+            });
 
             ChatMessageDto botMsg = new ChatMessageDto();
             botMsg.setContent(botResponse);
             botMsg.setSenderUsername("BookBot");
             botMsg.setSenderDisplayName("The Library Ghost");
-            botMsg.setType("CHAT");
+            botMsg.setType("TEXT");
             botMsg.setSentAt(java.time.Instant.now().toString() + "Z");
 
             messagingTemplate.convertAndSend("/topic/chat/" + roomId, botMsg);
         }
-        // --- End AI Integration ---
+        // --- End AI Bot Integration ---
     }
 
     // ... (rest of your original code follows, no changes made to history or rooms)
