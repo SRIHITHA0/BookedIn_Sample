@@ -35,7 +35,9 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   personalSearchQuery = '';
 
   readonly groupRooms = ['general', 'fiction', 'mystery', 'sci-fi', 'fantasy', 'thriller'];
-  readonly aiRoom = 'ai-bot-room';
+
+  // Each user gets their own private room with the AI bot
+  get aiRoom(): string { return `ai_${this.currentUsername}`; }
 
   get filteredPersonalConversations(): Conversation[] {
     const q = this.personalSearchQuery.trim().toLowerCase();
@@ -109,9 +111,9 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     return this.roomId.startsWith('dm_');
   }
 
-  // Helper to identify if current room is the AI chatbot room
+  // Personal AI rooms follow the pattern ai_<username>
   get isAiRoom(): boolean {
-    return this.roomId === 'ai-bot-room';
+    return this.roomId.startsWith('ai_');
   }
 
   get roomDisplayName(): string {
@@ -123,10 +125,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       return parts.find(p => p !== this.currentUsername) ?? rest;
     }
 
-    // Custom name for the AI Chat room
-    if (this.isAiRoom) {
-      return 'The Library Ghost';
-    }
+    if (this.isAiRoom) return 'The Library Ghost';
 
     return this.roomId.charAt(0).toUpperCase() + this.roomId.slice(1);
   }

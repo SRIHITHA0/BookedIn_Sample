@@ -132,7 +132,7 @@
       </div>
       <div class="min-w-0">
         <h1 class="text-white font-semibold text-sm sm:text-base truncate">{{ roomDisplayName }}</h1>
-        <p class="text-gray-500 text-xs">{{ isDmRoom ? 'Private conversation' : (roomId === 'ai-bot-room' ? 'AI Assistant' : 'Group discussion') }}</p>
+        <p class="text-gray-500 text-xs">{{ isDmRoom ? 'Private conversation' : (isAiRoom ? 'Your private AI assistant' : 'Group discussion') }}</p>
       </div>
     </div>
 

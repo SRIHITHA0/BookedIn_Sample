@@ -73,7 +73,8 @@ public class ChatController {
         messagingTemplate.convertAndSend("/topic/chat/" + roomId, incoming);
 
         // --- AI Bot Integration ---
-        if ("ai-bot-room".equals(roomId)) {
+        // Each user has their own private AI room: ai_<username>
+        if (roomId.startsWith("ai_")) {
             List<Book> libraryBooks = bookRepository.findAll();
             String botResponse = aiChatService.getBotResponse(incoming.getContent(), libraryBooks);
 
