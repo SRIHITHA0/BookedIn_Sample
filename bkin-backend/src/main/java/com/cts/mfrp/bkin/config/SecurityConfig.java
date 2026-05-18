@@ -48,7 +48,8 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(12);
+        // Reduced from 12 to 10 — still secure, significantly faster on free-tier CPU
+        return new BCryptPasswordEncoder(10);
     }
 
     @Bean
@@ -59,10 +60,18 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:4200", "https://booked-in-sample.vercel.app"));
+
+        // Use setAllowedOriginPatterns (not setAllowedOrigins) to support wildcards
+        config.setAllowedOriginPatterns(List.of(
+            "http://localhost:*",
+            "https://booked-in-sample.vercel.app",
+            "https://*.vercel.app"
+        ));
+
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
