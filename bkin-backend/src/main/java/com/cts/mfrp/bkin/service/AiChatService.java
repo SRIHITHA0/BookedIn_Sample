@@ -52,7 +52,8 @@ public class AiChatService {
             List<Book> relevantBooks = allBooks.stream()
                     .filter(b -> b.getTitle().toLowerCase().contains(query)
                             || b.getAuthor().toLowerCase().contains(query)
-                            || (b.getGenre() != null && b.getGenre().toLowerCase().contains(query)))
+                            || (b.getGenre() != null && b.getGenre().getName() != null
+                                && b.getGenre().getName().toLowerCase().contains(query)))
                     .limit(20)
                     .collect(Collectors.toList());
 
@@ -64,7 +65,8 @@ public class AiChatService {
             StringBuilder libraryContext = new StringBuilder("\n\nLibrary Books (sample):\n");
             for (Book b : relevantBooks) {
                 libraryContext.append("- ").append(b.getTitle()).append(" by ").append(b.getAuthor());
-                if (b.getGenre() != null) libraryContext.append(" [").append(b.getGenre()).append("]");
+                if (b.getGenre() != null && b.getGenre().getName() != null)
+                    libraryContext.append(" [").append(b.getGenre().getName()).append("]");
                 libraryContext.append("\n");
             }
 
