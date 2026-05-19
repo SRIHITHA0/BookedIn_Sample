@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 export interface UserProfile {
@@ -59,5 +60,19 @@ export class UserService {
 
   getMyShelf(): Observable<ShelfItem[]> {
     return this.http.get<ShelfItem[]>(`${this.base}/shelf`);
+  }
+
+  blockUser(username: string): Observable<void> {
+    return this.http.post<void>(`${this.base}/users/${username}/block`, {});
+  }
+
+  unblockUser(username: string): Observable<void> {
+    return this.http.delete<void>(`${this.base}/users/${username}/block`);
+  }
+
+  isBlocked(username: string): Observable<boolean> {
+    return this.http.get<{ blocked: boolean }>(`${this.base}/users/${username}/block`).pipe(
+      map(r => r.blocked)
+    );
   }
 }

@@ -1,6 +1,7 @@
 package com.cts.mfrp.bkin.dto;
 
 public class ChatMessageDto {
+    private Long id;
     private String content;
     private String type = "TEXT";
     private String senderUsername;
@@ -8,6 +9,8 @@ public class ChatMessageDto {
     private String senderProfilePictureUrl;
     private String sentAt;
 
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }
     public String getType() { return type; }

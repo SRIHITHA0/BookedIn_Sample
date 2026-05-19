@@ -20,10 +20,14 @@ export interface Conversation {
 export class ChatService {
 
   private stompClient: Client | null = null;
-  private messageSubject = new Subject<ChatMessage>();
+  private messageSubject  = new Subject<ChatMessage>();
+  private deletionSubject = new Subject<number>();   // emits messageId on deletion
   private _connected = false;
 
   get connected(): boolean { return this._connected; }
+
+  /** Emits the id of every message that has been deleted by any participant */
+  get deletions$(): Observable<number> { return this.deletionSubject.asObservable(); }
 
   constructor(private http: HttpClient) {}
 
@@ -33,12 +37,11 @@ export class ChatService {
   }
 
   connect(roomId: string): Observable<ChatMessage> {
-    // Clean up any existing connection
     if (this.stompClient?.active) {
       this.stompClient.deactivate();
     }
-    // Fresh subject per connection so old messages from previous rooms don't bleed through
-    this.messageSubject = new Subject<ChatMessage>();
+    this.messageSubject  = new Subject<ChatMessage>();
+    this.deletionSubject = new Subject<number>();
 
     const token = localStorage.getItem('bkin_jwt_token');
 
@@ -51,7 +54,16 @@ export class ChatService {
         this.stompClient!.subscribe(`/topic/chat/${roomId}`, (msg: IMessage) => {
           try {
             const raw = JSON.parse(msg.body);
+
+            // ── Deletion event ────────────────────────────────────────────
+            if (raw.eventType === 'MESSAGE_DELETED') {
+              this.deletionSubject.next(raw.messageId as number);
+              return;
+            }
+
+            // ── Regular chat message ──────────────────────────────────────
             const chatMsg: ChatMessage = {
+              id:                       raw.id ?? undefined,
               content:                  raw.content,
               type:                     raw.type ?? 'TEXT',
               senderUsername:           raw.senderUsername,
@@ -85,7 +97,10 @@ export class ChatService {
 
   getHistory(roomId: string): Observable<ChatMessage[]> {
     return this.http.get<ChatMessage[]>(`${environment.apiUrl}/api/chat/${roomId}/history`).pipe(
-      map(msgs => msgs.map(m => ({ ...m, senderProfilePictureUrl: this.resolveAvatar(m.senderProfilePictureUrl) })))
+      map(msgs => msgs.map(m => ({
+        ...m,
+        senderProfilePictureUrl: this.resolveAvatar(m.senderProfilePictureUrl)
+      })))
     );
   }
 
@@ -95,7 +110,22 @@ export class ChatService {
 
   getPersonalConversations(): Observable<Conversation[]> {
     return this.http.get<Conversation[]>(`${environment.apiUrl}/api/chat/personal/conversations`).pipe(
-      map(convs => convs.map(c => ({ ...c, otherProfilePictureUrl: this.resolveAvatar(c.otherProfilePictureUrl) })))
+      map(convs => convs.map(c => ({
+        ...c,
+        otherProfilePictureUrl: this.resolveAvatar(c.otherProfilePictureUrl)
+      })))
+    );
+  }
+
+  /** Delete a single message. The backend broadcasts MESSAGE_DELETED to the room. */
+  deleteMessage(messageId: number): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/api/chat/messages/${messageId}`);
+  }
+
+  /** Delete (hide) a DM conversation for the current user only. */
+  deleteConversation(roomId: string): Observable<void> {
+    return this.http.delete<void>(
+      `${environment.apiUrl}/api/chat/rooms/${encodeURIComponent(roomId)}`
     );
   }
 
